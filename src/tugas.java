@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -63,14 +64,23 @@ public class tugas extends HttpServlet {
         }
 		Random r = new Random();
 		int index = r.nextInt(((list.size() - 1) - 0) + 1) + 0;
-        if(foo != null) {
-        	json.put("foo",foo);
-        }
-        if(bar != null) {
-        	json.put("bar",bar);
-        }
-        if(quote != null) {
-        	json.put("quote",list.get(index));
+		Enumeration<String> parameterNames = request.getParameterNames();
+		 
+        while (parameterNames.hasMoreElements()) {
+ 
+            String paramName = parameterNames.nextElement();
+ 
+            String[] paramValues = request.getParameterValues(paramName);
+            for (int i = 0; i < paramValues.length; i++) {
+                String paramValue = paramValues[i];
+                if(paramName.contentEquals("quote")) {
+                	json.put("quote",list.get(index));
+                }else {
+                	 json.put(paramName,paramValue);
+                }
+               
+            }
+ 
         }
 		response.getWriter().print(json);
 	}
