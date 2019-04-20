@@ -47,9 +47,6 @@ public class tugas extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		JSONObject json = new JSONObject();
-        String foo = request.getParameter("foo");
-        String bar = request.getParameter("bar");
-        String quote = request.getParameter("quote");
         String filename = "/quotes.txt";
         ArrayList<String> list = new ArrayList<String>();
         ServletContext context = getServletContext();
@@ -65,11 +62,8 @@ public class tugas extends HttpServlet {
 		Random r = new Random();
 		int index = r.nextInt(((list.size() - 1) - 0) + 1) + 0;
 		Enumeration<String> parameterNames = request.getParameterNames();
-		 
         while (parameterNames.hasMoreElements()) {
- 
             String paramName = parameterNames.nextElement();
- 
             String[] paramValues = request.getParameterValues(paramName);
             for (int i = 0; i < paramValues.length; i++) {
                 String paramValue = paramValues[i];
@@ -78,7 +72,6 @@ public class tugas extends HttpServlet {
                 }else {
                 	 json.put(paramName,paramValue);
                 }
-               
             }
  
         }
