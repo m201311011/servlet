@@ -47,34 +47,34 @@ public class tugas extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		JSONObject json = new JSONObject();
-        String filename = "/quotes.txt";
-        ArrayList<String> list = new ArrayList<String>();
-        ServletContext context = getServletContext();
-        InputStream is = context.getResourceAsStream(filename);
-        if (is != null) {
-            InputStreamReader isr = new InputStreamReader(is);
-            BufferedReader reader = new BufferedReader(isr);
-            String text;
-            while ((text = reader.readLine()) != null) {
-                list.add(text);
-            }
-        }
+		String filename = "/quotes.txt";
+		ArrayList<String> list = new ArrayList<String>();
+		ServletContext context = getServletContext();
+		InputStream is = context.getResourceAsStream(filename);
+		if (is != null) {
+		    InputStreamReader isr = new InputStreamReader(is);
+		    BufferedReader reader = new BufferedReader(isr);
+		    String text;
+		    while ((text = reader.readLine()) != null) {
+			list.add(text);
+		    }
+		}
 		Random r = new Random();
 		int index = r.nextInt(((list.size() - 1) - 0) + 1) + 0;
 		Enumeration<String> parameterNames = request.getParameterNames();
-        while (parameterNames.hasMoreElements()) {
-            String paramName = parameterNames.nextElement();
-            String[] paramValues = request.getParameterValues(paramName);
-            for (int i = 0; i < paramValues.length; i++) {
-                String paramValue = paramValues[i];
-                if(paramName.contentEquals("quote")) {
-                	json.put("quote",list.get(index));
-                }else {
-                	 json.put(paramName,paramValue);
-                }
-            }
- 
-        }
+		while (parameterNames.hasMoreElements()) {
+		    String paramName = parameterNames.nextElement();
+		    String[] paramValues = request.getParameterValues(paramName);
+		    for (int i = 0; i < paramValues.length; i++) {
+			String paramValue = paramValues[i];
+			if(paramName.contentEquals("quote")) {
+				json.put("quote",list.get(index));
+			}else {
+				 json.put(paramName,paramValue);
+			}
+		    }
+
+		}
 		response.getWriter().print(json);
 	}
 
